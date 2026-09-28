@@ -140,14 +140,11 @@ scope :: #force_no_inline proc(label: string, #any_int processed_bytes := 0) -> 
 	}
 }
 
-@(deferred_out=procedure_defer)
+@(deferred_out=pop)
 procedure :: #force_no_inline proc(#any_int processed_bytes := 0, loc := #caller_location) -> Zone {
 	when PROFILER_ENABLE {
 		return push(llvm.return_address(0), loc.procedure, processed_bytes)
 	} else {
 		return {}
 	}
-}
-procedure_defer :: proc(zone: Zone) {
-	pop(zone)
 }
